@@ -50,6 +50,7 @@
                 <th>UserType</th>
                 <th>Image</th>
                 <th>Delete</th>
+                <th>Edit</th>
 
             </tr>
             @foreach ($post as $p )
@@ -65,6 +66,9 @@
                 </td>
                 <td>
                     <a href="{{url('delete_post',$p->id)}}" class="btn btn-danger" onclick="return confirm('Are you sure to Delete This?')">Delete</a>
+                </td>
+                <td>
+                <a href="{{url('edit_page',$p->id)}}" class="btn btn-success" >Edit</a>
                 </td>
             </tr>
             @endforeach

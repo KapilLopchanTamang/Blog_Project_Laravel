@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use League\CommonMark\Extension\DescriptionList\Node\DescriptionList;
+use RealRashid\SweetAlert\Facades\Alert; 
+
 class AdminController extends Controller
 {
     public function post_page(){
@@ -39,8 +42,9 @@ class AdminController extends Controller
         }
         
         $post->save();
-        return redirect()->back()->with('message','Post Added 
-        Successfully');
+        Alert::success('Congrats', 'You have added the data Successfully');
+        return redirect()->back();
+        
     }
     public function show_post(){
         $post=Post::all();
@@ -62,4 +66,34 @@ class AdminController extends Controller
     return redirect()->back()->with('message', 'Post deleted successfully');
         
     }
+    public function edit_page( $id){
+        $post = Post::find($id);
+        
+        return view('admin.edit_page',compact('post'));
+        
+        }
+        public function update_post(Request $request, $id) {
+            // Validate the incoming request data
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+            ]);
+        
+            // Find the post by ID
+            $data = Post::find($id);
+        
+            if (!$data) {
+                return redirect()->back()->withErrors('Post not found.');
+            }
+        
+            // Update the post details
+            $data->title = $validatedData['title'];
+            $data->description = $validatedData['description'];
+        
+            // Save the changes to the database
+            $data->save();
+        
+            // Redirect back with a success message
+            return redirect()->back()->with('message', 'Post updated successfully.');
+        }
 }

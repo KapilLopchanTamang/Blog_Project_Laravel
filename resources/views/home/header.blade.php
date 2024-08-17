@@ -8,7 +8,7 @@
                   <div class="collapse navbar-collapse" id="navbarNav">
                      <ul class="navbar-nav">
                         <li class="nav-item">
-                           <a class="nav-link" href="index.html">Home</a>
+                           <a class="nav-link" href="/">Home</a>
                         </li>
                         <li class="nav-item">
                            <a class="nav-link" href="about.html">About</a>
@@ -41,6 +41,8 @@
     
                      </x-app-layout>
                      </li>
+                     <li><a href="{{url('my_post')}}">My Post</a></li>
+                     <li><a href="{{url('create_post')}}">Create Post</a></li>
   
 
                      @else

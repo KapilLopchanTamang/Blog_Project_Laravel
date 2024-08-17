@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head> 
+    <base href="/public">
     @include('admin.css')
     <style type="text/css">
         body {
@@ -65,39 +66,36 @@
         }
     </style>
   </head>
+  
   <body>
-  @include('sweetalert::alert')
-    @include('admin.header')
+     @include('admin.header')
     <div class="d-flex align-items-stretch">
-      @include('admin.sidebar')
+      <!-- Sidebar Navigation-->
+     @include('admin.sidebar')
+      <!-- Sidebar Navigation end-->
       <div class="page-content">
-        
-        @if(session()->has('message'))
-        <div class="alert alert-success">
-            <span class="close" data-dismiss="alert">x</span>
-            {{session()->get('message')}}
-        </div>
-        @endif
-        
-        <h1 class="post_title">Add Post</h1>
-        
-        <div class="form-container">
-            <form action="{{url('add_post')}}" method="post" enctype="multipart/form-data">
-                @csrf
-                <label for="title">Post Title</label>
-                <input type="text" name="title" id="title" placeholder="Enter the post title">
+      <h1 class="post_title">Edit Post</h1>
+      <div class="form-container">
+        <form action="{{url('update_post',$post->id)}}" method="post" enctype="multipart/form-data">
+            @csrf
+        <label for="title">Post Title</label>
+                <input type="text" name="title" id="title" placeholder="Enter the post title"
+                value="{{$post->title}}">
                 
                 <label for="description">Post Description</label>
-                <textarea name="description" id="description" placeholder="Enter the post description"></textarea>
-                
-                <label for="image">Add Image</label>
+                <textarea name="description" id="description" placeholder="Enter the post description">{{$post->description}}</textarea>
+                <div>
+                    <label>Old Image</label>
+                    <img height="150px" width="300px"src="/postimage/{{$post->image}}">
+                </div>
+                <div class="div_center">
+                <label for="image">Update Old Image</label>
                 <input type="file" name="image" id="image">
-                
+                </div>
                 <input type="submit" class="btn btn-primary" value="Submit Post">
-            </form>
+        </form>
         </div>
-      </div>
     </div>
-    @include('admin.footer')
+   @include('admin.footer');
   </body>
 </html>
